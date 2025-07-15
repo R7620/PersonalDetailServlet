@@ -1,1 +1,67 @@
+//using Servlet create  PersonalDetailServlet web page
+
+package com.raj.dopost;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@WebServlet("/PersonalDetailServlet")
+public class PersonalDetailServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	public PersonalDetailServlet() {
+		super();
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setContentType("text/html");
+		PrintWriter out = resp.getWriter();
+
+		String name = req.getParameter("name");
+		String age = req.getParameter("age");
+		String mobile = req.getParameter("mobile");
+		String gender = req.getParameter("gender");
+		String[] hobbies = req.getParameterValues("hobbies");
+
+		out.println("<!DOCTYPE html>");
+		out.println("<html>");
+		out.println("<head><title>Person Detail Submitted</title></head>");
+		out.println("<body>");
+		out.println("<h2>Person Details:</h2>");
+		out.println("<table border='1' cellpadding='10'>");
+
+		out.println("<tr><th>Name</th><th>Age</th><th>Mobile</th><th>Gender</th><th>Hobbies</th></tr>");
+		out.println("<tr>");
+		out.println("<td>" + name + "</td>");
+		out.println("<td>" + age + "</td>");
+		out.println("<td>" + mobile + "</td>");
+		out.println("<td>" + gender + "</td>");
+		out.println("<td>");
+
+		if (hobbies != null && hobbies.length > 0) {
+			for (int i = 0; i < hobbies.length; i++) {
+				out.print(hobbies[i]);
+				if (i < hobbies.length - 1) {
+					out.print(", ");
+				}
+			}
+		} else {
+			out.print("No hobbies selected");
+		}
+
+		out.println("</td>");
+		out.println("</tr>");
+		out.println("</table>");
+		out.println("</body>");
+		out.println("</html>");
+		out.close();
+	}
+}
 
